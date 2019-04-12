@@ -1,0 +1,27 @@
+{
+  "name": "buzca",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/server.js"
+  },
+  "keywords": [
+    "tesis",
+    "buzca",
+    "web",
+    "system",
+    "geolocation"
+  ],
+  "author": "Team Buzca",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "pug": "^2.0.3",
+    "stylus": "^0.54.5"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
+  }
+}
