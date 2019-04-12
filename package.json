@@ -22,6 +22,7 @@
     "stylus": "^0.54.5"
   },
   "devDependencies": {
+    "morgan": "^1.9.1",
     "nodemon": "^1.18.11"
   }
 }
