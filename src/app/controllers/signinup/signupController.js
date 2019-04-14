@@ -12,6 +12,7 @@ function savePartner(req, res) {
     })
     .then(function(response) {
         console.log(response.data)
+        return res.redirect('/partner/complete')
         return res.send(`Usuario registrado`)
     })
     .catch(function(error) {

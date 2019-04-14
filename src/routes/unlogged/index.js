@@ -1,6 +1,5 @@
 'use strict'
 
-const testController = require('../../app/controllers/testController')
 const signupController = require('../../app/controllers/signinup/signupController')
 
 module.exports = (app, urlencodedParser) => {    
@@ -13,6 +12,7 @@ module.exports = (app, urlencodedParser) => {
     app.get('/signup', (req, res) => {
         return res.render('costumer/signup')
     })
+
     app.get('/partner/login', (req, res) => {
         return res.render('partner/login')
     })
@@ -22,9 +22,8 @@ module.exports = (app, urlencodedParser) => {
     app.post('/partner/signup', urlencodedParser, (req, res) => {
         return signupController.savePartner(req, res)
     })
-
-    /* Testing */
-    app.get('/test', (req, res) => {
-        return testController.index(req, res)
+    app.get('/partner/complete', urlencodedParser, (req, res) => {
+        return res.render('partner/complete', {msg: 'Usuario Registrado'})
     })
+
 }
