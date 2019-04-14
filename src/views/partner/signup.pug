@@ -9,10 +9,19 @@ html(lang="es")
     body
         div
             div.container
-                form.box
+                form.box(action="/partner/signup" method="post")
                     h1 Regístrate Partner
-                    input.input(type="email" placeholder="Email")
-                    input.input(type="password" placeholder="Contraseña")
+                    input.input(type="name" placeholder="Nombres" name="name" required)
+                    input.input(type="name" placeholder="Apellidos" name="lastname" required)
+                    input.input(type="email" placeholder="Email" name="email" required)
+                    span Seleccione su distrito
+                    select.input(name="dist" required)
+                        option(value="") - Seleccione -
+                        option(value="San Isidro") San Isidro
+                        option(value="Miraflores") Miraflores
+                        option(value="Surco") Surco
+                    input.input(type="password" placeholder="Contraseña" name="password" required)
                     a.button.is-info.is-inverted(href="/partner/login") ¿Ya tienes una cuenta?
                     input.box.button.is-link(type="submit" value="Registrarse")
+                    a.box.button.is-link.is-inverted(href="/") Volver
                 
