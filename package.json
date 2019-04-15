@@ -1,30 +1,35 @@
 {
-  "name": "buzca",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/server.js",
+  "name": "adonis-fullstack-app",
+  "version": "4.1.0",
+  "adonis-version": "4.1.0",
+  "description": "The fullstack application boilerplate for Adonisjs",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/server.js"
+    "start": "node server.js",
+    "test": "node ace test"
   },
   "keywords": [
-    "tesis",
-    "buzca",
-    "web",
-    "system",
-    "geolocation"
+    "adonisjs",
+    "adonis-app"
   ],
-  "author": "Team Buzca",
-  "license": "MIT",
+  "author": "",
+  "license": "UNLICENSED",
+  "private": true,
   "dependencies": {
-    "axios": "^0.18.0",
-    "body-parser": "^1.18.3",
-    "express": "^4.16.4",
-    "pug": "^2.0.3",
-    "stylus": "^0.54.5"
+    "@adonisjs/ace": "^5.0.8",
+    "@adonisjs/auth": "^3.0.7",
+    "@adonisjs/bodyparser": "^2.0.5",
+    "@adonisjs/cors": "^1.0.7",
+    "@adonisjs/fold": "^4.0.9",
+    "@adonisjs/framework": "^5.0.9",
+    "@adonisjs/ignitor": "^2.0.8",
+    "@adonisjs/lucid": "^6.1.3",
+    "@adonisjs/session": "^1.0.27",
+    "@adonisjs/shield": "^1.0.8",
+    "axios": "^0.18.0"
   },
-  "devDependencies": {
-    "morgan": "^1.9.1",
-    "nodemon": "^1.18.11"
+  "devDependencies": {},
+  "autoload": {
+    "App": "./app"
   }
 }
