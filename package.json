@@ -1,8 +1,8 @@
 {
-  "name": "adonis-fullstack-app",
-  "version": "4.1.0",
+  "name": "buzca",
+  "version": "1.0.0",
   "adonis-version": "4.1.0",
-  "description": "The fullstack application boilerplate for Adonisjs",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
