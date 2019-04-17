@@ -1,1 +1,1 @@
-web: ENV_SILENT=true npm start
+web: ENV_PATH=/user/.env node server.js
