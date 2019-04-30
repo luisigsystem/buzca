@@ -8,17 +8,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
 </head>
 <body>
-    <div>
+    <div id="app">
         <div class="container">
-            <h2>{{ msg }}</h2>
-            <form class="box" action="">
-                <h3 class="title">Escoge una categoría</h3>
-                <select class="input" name="" id="">
-                    <option value="">Electricista</option>
-                    <option value="">Enseñanza</option>
-                    <option value="">Técnico</option>
-                </select>
-            </form>
+            <div class="categories">
+                <h2>{{ msg }}</h2>
+                <form class="box" action="">
+                    <h3 class="title">Escoge una categoría</h3>
+                    <select class="input" name="" id="">
+                        <option value="">Electricista</option>
+                        <option value="">Enseñanza</option>
+                        <option value="">Técnico</option>
+                    </select>
+                </form>
+            </div>
+            <div class="geolocation">
+                <div class="box">
+                    <p>Dar acceso a la ubicación</p>
+                    <button>Continuar</button>
+                </div>
+            </div>
         </div>
     </div>
 </body>
