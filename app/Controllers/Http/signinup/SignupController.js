@@ -4,8 +4,9 @@ const axios = require('axios')
 
 class SignupController {
 
-    async savePartner({request, response}) {
+    async savePartner({request, response, session, view}) {
         response.implicitEnd = false
+
         const {name, lastname, email, dist, password} = request.all()
 
         axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/saveUser', {
@@ -18,7 +19,10 @@ class SignupController {
         })
         .then(function(res) {
             console.log('siiii')
-            return response.redirect('/partner/complete')
+            session.put('email', email)
+            console.log(session.get('email'))
+            return response.redirect('/partner/complete', {email: session.get('email')})
+            // return view.render('partner/complete', {email: session.get('email')})
         })
         .catch(function(error) {
             console.log('nooo',error)
@@ -26,8 +30,9 @@ class SignupController {
         })
     }
 
-    async completePartner({request, response, view, session}) {
-        return view.render('partner/complete', {msg: "Partner Registrado"})
+    async completePartner({session, request, response, view}) {
+        console.log('En email hay ' + session.get('email'))
+        return view.render('partner/complete', {email: session.get('email')})
     }
 
     async saveCostumer({request, response}) {

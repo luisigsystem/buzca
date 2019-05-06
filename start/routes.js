@@ -19,5 +19,8 @@ Route.on('/partner/signup').render('partner/signup')
 
 Route.post('/partner/signup', 'signinup/signupController.savePartner')
 Route.get('/partner/complete', 'signinup/signupController.completePartner')
+Route.post('/partner/complete', 'partner/RegisterController.setSkill')
+
+Route.get('/partner', 'partner/MainController.index')
 
 /** Logged */
