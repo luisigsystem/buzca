@@ -10,8 +10,13 @@ Route.on('/').render('index')
 Route.on('/login').render('costumer/login')
 Route.on('/signup').render('costumer/signup')
 
+<<<<<<< HEAD
 Route.post('/signup', 'signinup/signupController.saveCostumer')
 Route.on('/main').render('costumer/main')
+=======
+Route.post('/main', 'signinup/signupController.saveCostumer')
+Route.get('/main', 'signinup/signupController.main')
+>>>>>>> origin/adonis_test_2
 
     /** Partner */
 Route.on('/partner/login').render('partner/login')
@@ -19,5 +24,8 @@ Route.on('/partner/signup').render('partner/signup')
 
 Route.post('/partner/signup', 'signinup/signupController.savePartner')
 Route.get('/partner/complete', 'signinup/signupController.completePartner')
+Route.post('/partner/complete', 'partner/RegisterController.setSkill')
+
+Route.get('/partner', 'partner/MainController.index')
 
 /** Logged */

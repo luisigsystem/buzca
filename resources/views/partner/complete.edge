@@ -5,12 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Completa tus datos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
 </head>
 <body>
-    <div>
-        <div>
-            <h2>{{ msg }}</h2>
+    <div id="app">
+        <h2>{{ user }}</h2>
+        <div class="container">
+            <div class="categories">
+                <form class="box" action="/partner/complete" method="post">
+                    {{ csrfField() }}
+                    <input type="hidden" name="email" v-model="email"/>
+                    <input type="hidden" name="skill" v-model="category" value=""/>
+                    <input type="hidden" name="latitude" v-model="latitude" value=""/>
+                    <input type="hidden" name="longitude" v-model="longitude" value=""/>
+                    <div class="box" v-if="step==1" >
+                        <h3 class="title">Escoge una categoría</h3>
+                        <select class="input" v-model="category" name="" id="" required>
+                            <option value="Gasfitero">Gasfitero</option>
+                            <option value="Carpintero">Carpintero</option>
+                            <option value="Limpieza">Limpieza</option>
+                            <option value="Técnico">Técnico</option>
+                            <option value="Electricista">Electricista</option>
+                        </select><br><br>
+                        <input type="button" @click="sumStep" class="button is-link" value="Continuar" />
+                    </div>
+                    <div class="box" v-if="step==2" >
+                        <h3 class="title">Ubicación</h3>
+                        <p>Para continuar debes dar acceso a tu ubicación</p><br>
+                        <input type="button" @click="sumStep" class="button is-link" value="Continuar" />
+                    </div>
+                    <div class="box" v-if="step==3" >
+                        <h3 class="title">Todo listo</h3>
+                        <input type="submit" class="button is-link" value="Ingresar" />
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- production version, optimized for size and speed -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <script>
+        var app = new Vue({
+            el: '#app',
+            delimiters: ['{(', ')}'],
+            data: {
+                email: \'{{ email }}\',
+                category: null,
+                latitude: null,
+                longitude: null,
+                step: 1,
+                stop: false
+            },
+            methods: {
+                sumStep: function() {
+                    if(this.step == 2) {
+                        this.stop = geolocation(this)
+                        // console.log('Es: ' + this.stop)
+                    }
+                    if(!this.stop) {
+                        this.step++
+                    }
+                }
+            }
+        })
+    </script>
+    <script>
+    // 1º Latitud = 111Km (aprox)
+    // 1ª Longitud = 111Km (aprox)
+        function geolocation(vue) {
+            if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    vue.longitude = position.coords.longitude
+                    vue.latitude = position.coords.latitude
+                    vue.step++
+                    return false
+                })
+            }else {
+                console.log('La geolocolazacion no es soportada')
+                return true
+            }
+            return true
+        }
+    </script>
 </body>
 </html>
