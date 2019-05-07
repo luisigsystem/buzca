@@ -6,10 +6,39 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Completa tus datos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+    crossorigin=""/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <style>
+        #mapid {
+            height: 680px; 
+        }
+    </style>
 </head>
-<body>
-    <div>
-        <h1>MENÚ PRINCIPAL</h1>        
+<body> 
+    <div class="box">
+        <h1>MENÚ PRINCIPAL</h1>    
+        <div>
+            <form action="">
+                    <input class="button" type="search" ><button class="button is-link" type="button"><i class="fas fa-list-ul"></i></button>
+            </form>            
+        </div>    
     </div>
+    <div>
+        <div id="mapid"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+   crossorigin=""></script>
+    <script>
+        const map = L.map('mapid').setView([-12.176317, -76.956290], 19);
+
+        /** More tiles: https://wiki.openstreetmap.org/wiki/Tiles , es necfesario quitarlñe los simblos de $ al pegar la url*/
+        const tileURL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+
+        L.tileLayer(tileURL).addTo(map);
+        L.marker([-12.176317, -76.956290]).addTo(map);
+    </script>
 </body>
 </html>
