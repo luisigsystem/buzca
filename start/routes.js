@@ -23,4 +23,8 @@ Route.post('/partner/complete', 'partner/RegisterController.setSkill')
 
 Route.get('/partner', 'partner/MainController.index')
 
+
 /** Logged */
+
+    /** Partner */
+Route.get('/partner/:email', 'partner/MainController.loadProfile')
