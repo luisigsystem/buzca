@@ -18,21 +18,17 @@ class SignupController {
             password: password
         })
         .then(function(res) {
-            console.log('siiii')
-            session.put('email', email)
             console.log(session.get('email'))
-            return response.redirect('/partner/complete', {email: session.get('email')})
-            // return view.render('partner/complete', {email: session.get('email')})
+            return response.route(`/partner/complete/${email}`)
         })
         .catch(function(error) {
-            console.log('nooo',error)
             return response.send('No Excelente')
         })
     }
 
-    async completePartner({session, request, response, view}) {
-        console.log('En email hay ' + session.get('email'))
-        return view.render('partner/complete', {email: session.get('email')})
+    async completePartner({request, response, view}) {
+        let email = request.params.email
+        return view.render('partner/complete', {email: email})
     }
 
     async saveCostumer({request, response}) {
@@ -48,7 +44,6 @@ class SignupController {
             password: password
         })
         .then(function(res) {
-            console.log('siiii')
             return response.redirect('/main')
             return response.send(`Usuario registrado`)
         })
