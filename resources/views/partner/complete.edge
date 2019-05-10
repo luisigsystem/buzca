@@ -14,7 +14,7 @@
             <div class="categories">
                 <form class="box" action="/partner/complete" method="post">
                     {{ csrfField() }}
-                    <input type="hidden" name="email" v-model="email"/>
+                    <input type="hidden" name="username" v-model="username"/>
                     <input type="hidden" name="skill" v-model="category" value=""/>
                     <input type="hidden" name="latitude" v-model="latitude" value=""/>
                     <input type="hidden" name="longitude" v-model="longitude" value=""/>
@@ -51,7 +51,7 @@
             el: '#app',
             delimiters: ['{(', ')}'],
             data: {
-                email: \'{{ email }}\',
+                username: \'{{ username }}\',
                 category: null,
                 latitude: null,
                 longitude: null,

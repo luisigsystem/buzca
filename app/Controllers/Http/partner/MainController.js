@@ -9,8 +9,9 @@ class MainController {
     }
 
     async loadProfile({request, response, view, session}) {
-        let email = 'f@f.com'
-        
+        console.log(session.get('email'))
+        let email = session.get('email')
+
         try {
             const res = await axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/getProfile', {
                 email: email
@@ -23,6 +24,7 @@ class MainController {
         } catch (error) {
             return response.send('No Excelente')            
         }
+    }
 }
 
 module.exports = MainController

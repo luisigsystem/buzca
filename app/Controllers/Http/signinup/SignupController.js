@@ -18,7 +18,12 @@ class SignupController {
                 type: 'partner',
                 password: password
             })
-            return view.render('partner/complete', {email: email})
+            if(res.error) return response.send('Hubo un error')
+
+            let username = res.data.username
+            console.log(username)
+            session.put('username', username)
+            return view.render('partner/complete', {username: username})
         } catch (error) {
             console.error(error)
             return response.send('No Excelente')
