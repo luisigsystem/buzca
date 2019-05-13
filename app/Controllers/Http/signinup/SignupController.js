@@ -9,48 +9,45 @@ class SignupController {
 
         const {name, lastname, email, dist, password} = request.all()
 
-        axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/saveUser', {
-            name: name,
-            lastname: lastname,
-            email: email,
-            dist: dist,
-            type: 'partner',
-            password: password
-        })
-        .then(function(res) {
-            console.log(session.get('email'))
-            return response.route(`/partner/complete/${email}`)
-        })
-        .catch(function(error) {
-            return response.send('No Excelente')
-        })
-    }
+        try {
+            const res = await axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/saveUser', {
+                name: name,
+                lastname: lastname,
+                email: email,
+                dist: dist,
+                type: 'partner',
+                password: password
+            })
+            if(res.error) return response.send('Hubo un error')
 
-    async completePartner({request, response, view}) {
-        let email = request.params.email
-        return view.render('partner/complete', {email: email})
+            let username = res.data.username
+            console.log(username)
+            session.put('username', username)
+            return view.render('partner/complete', {username: username})
+        } catch (error) {
+            console.error(error)
+            return response.send('No Excelente')
+        }
     }
 
     async saveCostumer({request, response}) {
         response.implicitEnd = false
         const {name, lastname, email, dist, password} = request.all()
 
-        axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/saveUser', {
-            name: name,
-            lastname: lastname,
-            email: email,
-            dist: dist,
-            type: 'user',
-            password: password
-        })
-        .then(function(res) {
+        try {
+            const res = await axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/saveUser', {
+                name: name,
+                lastname: lastname,
+                email: email,
+                dist: dist,
+                type: 'user',
+                password: password
+            })
             return response.redirect('/main')
-            return response.send(`Usuario registrado`)
-        })
-        .catch(function(error) {
-            console.log('nooo',error)
+        } catch (error) {
+            console.error(error)
             return response.send('No Excelente')
-        })
+        }
     }
 
     async main({request, response, view, session}) {
