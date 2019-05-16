@@ -17,8 +17,7 @@ class SignupController {
                 lastname: lastname,
                 email: email,
                 dist: dist,
-                type: 'partner',
-                password: password
+                type: 'partner'
             })
             if(res.error) return response.send('Hubo un error')
             let username = res.data.username
@@ -58,8 +57,7 @@ class SignupController {
                 lastname: lastname,
                 email: email,
                 dist: dist,
-                type: 'user',
-                password: password
+                type: 'user'
             })
             if(res.error) return response.send('Hubo un error')
             let username = res.data.username

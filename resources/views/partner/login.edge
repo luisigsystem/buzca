@@ -10,11 +10,13 @@
 <body>
     <div>
         <div class="container">
-            <form class="box">
+            <form action="/partner/login" method="post" class="box">
+                {{ csrfField() }}
                 <h1>Login Partner</h1>
-                <input class="input" type="email" placeholder="Email" />
-                <input class="input" type="password" placeholder="Contraseña" />
+                <input class="input" type="email" name="email" placeholder="Email" />
+                <input class="input" type="password" name="password" placeholder="Contraseña" />
                 <a class="button is-info is-inverted" href="/partner/signup">¿No tienes cuenta?</a>
+                <span>{{ msg }}</span>
                 <input class="box button is-link" type="submit" value="Ingresar" />
                 <a class="box button is-link is-inverted" href="/">Volver</a>
             </form>
