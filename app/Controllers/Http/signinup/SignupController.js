@@ -1,16 +1,18 @@
 'use strict'
 
+const Database = use('Database')
+const User = use('App/Models/User')
 const axios = require('axios')
 
 class SignupController {
 
-    async savePartner({request, response, session, view}) {
-        response.implicitEnd = false
+    async savePartner({request, response, auth, view}) {	
+        try {                
+            const user = new User()
 
-        const {name, lastname, email, dist, password} = request.all()
+            const {name, lastname, email, dist, password} = request.all()
 
-        try {
-            const res = await axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/saveUser', {
+            let res = await axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/saveUser', {
                 name: name,
                 lastname: lastname,
                 email: email,
@@ -19,23 +21,39 @@ class SignupController {
                 password: password
             })
             if(res.error) return response.send('Hubo un error')
-
             let username = res.data.username
+            
             console.log(username)
-            session.put('username', username)
+            user.name = name
+            user.lastname = lastname
+            user.username = username
+            user.email = email
+            user.dist = dist
+            user.type = 'partner'
+            user.password = password
+
+            let existUser = await Database.select('email').from('users').where('email', user.email).first()
+            if(existUser){
+                return view.render('partner/signup', {msg: "Usuario ya existe"})
+            }	
+
+            await user.save()  
+            await auth.login(user)
             return view.render('partner/complete', {username: username})
+
         } catch (error) {
-            console.error(error)
-            return response.send('No Excelente')
-        }
+            console.error(error) 
+            return response.send('No Excelente')            
+        }  
     }
 
-    async saveCostumer({request, response}) {
-        response.implicitEnd = false
-        const {name, lastname, email, dist, password} = request.all()
-
+    async saveCostumer({request, response, auth}) {
         try {
-            const res = await axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/saveUser', {
+            const user = new User()
+
+            const {name, lastname, email, dist, password} = request.all()
+
+            let res = await axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/saveUser', {
                 name: name,
                 lastname: lastname,
                 email: email,
@@ -43,10 +61,31 @@ class SignupController {
                 type: 'user',
                 password: password
             })
+            if(res.error) return response.send('Hubo un error')
+            let username = res.data.username
+            
+            console.log(username)
+            user.name = name
+            user.lastname = lastname
+            user.username = username
+            user.email = email
+            user.dist = dist
+            user.type = 'user'
+            user.password = password
+
+            let existUser = await Database.select('email').from('users').where('email', user.email).first()
+            if(existUser){
+                return view.render('signup', {msg: "Usuario ya existe"})
+            }	
+
+            await user.save()  
+            await auth.login(user)
             return response.redirect('/main')
+            
         } catch (error) {
-            console.error(error)
+            console.log('nooo',error)
             return response.send('No Excelente')
+            
         }
     }
 
