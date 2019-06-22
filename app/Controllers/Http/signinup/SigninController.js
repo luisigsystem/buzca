@@ -19,6 +19,16 @@ class SigninController {
             return response.redirect('/partner/login')            
         }
     }
+
+    async logout({response, auth}) {
+        try {
+            await auth.logout()
+
+            return response.redirect('/')
+        } catch (error) {
+            return response.redirect('/')         
+        }
+    }
 }
 
 module.exports = SigninController
