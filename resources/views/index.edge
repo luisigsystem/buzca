@@ -10,16 +10,26 @@
 
 <body>
     <div>
-        <div class="container">
+        <div class="container" id="app">
             <div>
                 <h1 class="title">Buzca</h1>
             </div>
-            <div class="box">
-                <h1>Solicitantes</h1><a class="box button is-info is-inverted" href="/login">Iniciar Sesion</a><a class="box button is-info" href="/signup">Registrate</a></div>
-            <div class="box">
-                <h1>Partner</h1><a class="box button is-link is-inverted" href="/partner/login">Iniciar Sesion</a><a class="box button is-link" href="/partner/signup">Registrate</a></div>
+            <div style="width:190px; margin: 0 auto; margin-top: 24px; margin-bottom: 24px;">
+                <button class="button" @click="user = 'client'" v-bind:class="{ 'is-info': user == 'client' }">Solicitantes</button>
+                <button class="button" @click="user = 'partner'" v-bind:class="{ 'is-link': user == 'partner' }">Partner</button>
+            </div>
+            <div class="box" v-if="user == 'client'">
+                <h1>Solicitantes</h1>
+                <a class="box button is-info is-inverted" href="/login">Iniciar Sesion</a>
+                <a class="box button is-info" href="/signup">Registrate</a>
+            </div>
+            <div class="box" v-if="user == 'partner'">
+                <h1>Partner</h1>
+                <a class="box button is-link is-inverted" href="/partner/login">Iniciar Sesion</a>
+                <a class="box button is-link" href="/partner/signup">Registrate</a>
+            </div>
         </div>
-        <div class="container">
+        <div class="container" style="position: absolute; bottom: 0; width: 100%;">
             <div class="box">
                 <p><b>Créditos</b></p>
                 <p>Ventura Eugenio, Luis</p>
@@ -27,5 +37,15 @@
             </div>
         </div>
     </div>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                user: 'partner'
+            }
+        });
+    </script>
 </body>
 </html>
