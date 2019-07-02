@@ -14,10 +14,19 @@
         #mapid {
             height: 680px; 
         }
+        .profile {
+            display: inline;
+        }
         .profile i {
             color: #828b98;
             font-size: 36px;
             margin-left: 10%;
+        }
+        .popup-profile {
+            width: 150px;
+            position: relative;
+            margin-left: 200px;
+            z-index: 99;
         }
     </style>
 </head>
@@ -25,10 +34,14 @@
     <div>
         <div class="box">
             <h1>MENÚ PRINCIPAL</h1>    
-            <div>
+            <div id="nav">
                 <form action="">
                     <input class="button" type="search" placeholder="Buscar" style="text-align: left;" ><a href="#services" class="button is-link" ><i class="fas fa-list-ul"></i></a>
-                    <a href="/partner/F" class="profile" title="Mi perfil"><i class="fas fa-user-circle"></i></a>
+                    <div class="profile" title="Mi perfil" onclick="showPopup()"><i class="fas fa-user-circle"></i></div>
+                    <div class="box popup-profile" id="popup-profile" style="display: none">
+                        <a href="/partner/{{ auth.user.username }}" class="option"><div class="option">Ir al perfil</div></a>
+                        <a href="/logout" class="option is-danger is-outlined"><div class="option">Cerrar sesion</div></a>
+                    </div>
                 </form>            
             </div>    
         </div>
@@ -53,6 +66,13 @@
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
+        // var nav = new Vue({
+        //     el: '#nav',
+        //     delimiters: ['{(', ')}'],
+        //     data: {
+        //         popup: false;
+        //     }
+        // });
         var appMap = new Vue({
             el: '#app',
             delimiters: ['{(', ')}'],
@@ -102,6 +122,13 @@
             }).catch(error => {
                 console.log(error);
             });
+        }
+        function showPopup() {
+            var popup = document.getElementById('popup-profile');
+            if(popup.style.display == 'none')
+                popup.style.display = 'block'
+            else if(popup.style.display == 'block')
+                popup.style.display = 'none'
         }
     </script>
 </body>
