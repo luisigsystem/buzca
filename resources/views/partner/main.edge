@@ -22,38 +22,76 @@
     </style>
 </head>
 <body> 
-    <div class="box">
-        <h1>MENÚ PRINCIPAL</h1>    
-        <div>
-            <form action="">
-                <input class="button" type="search" placeholder="Buscar" style="text-align: left;" ><a href="#services" class="button is-link" ><i class="fas fa-list-ul"></i></a>
-                <a href="/partner/F" class="profile" title="Mi perfil"><i class="fas fa-user-circle"></i></a>
-            </form>            
-        </div>    
-    </div>
     <div>
-        <div id="mapid"></div>
-    </div>
-    <div id="services">
         <div class="box">
-            <div class="box"><span>Gasfitero</span></div>
-            <div class="box"><span>Carpintero</span></div>
-            <div class="box"><span>Limpieza</span></div>
-            <div class="box"><span>Técnico</span></div>
-            <div class="box"><span>Electricista</span></div>
+            <h1>MENÚ PRINCIPAL</h1>    
+            <div>
+                <form action="">
+                    <input class="button" type="search" placeholder="Buscar" style="text-align: left;" ><a href="#services" class="button is-link" ><i class="fas fa-list-ul"></i></a>
+                    <a href="/partner/F" class="profile" title="Mi perfil"><i class="fas fa-user-circle"></i></a>
+                </form>            
+            </div>    
+        </div>
+        <div>
+            <div id="app"></div>
+            <div id="mapid"></div>
+        </div>
+        <div id="services">
+            <div class="box">
+                <div class="box"><span>Gasfitero</span></div>
+                <div class="box"><span>Carpintero</span></div>
+                <div class="box"><span>Limpieza</span></div>
+                <div class="box"><span>Técnico</span></div>
+                <div class="box"><span>Electricista</span></div>
+            </div>
         </div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
    crossorigin=""></script>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
-        const map = L.map('mapid').setView([-12.195766, -76.971827], 19);
+        var appMap = new Vue({
+            el: '#app',
+            delimiters: ['{(', ')}'],
+            data: {
+                position: [0, 0],
+                latitude: 0,
+                longitude: 0,
+            },
+            created: function() {
+                this.map()
+            },
+            methods: {
+                map: function() {
+                    geolocation(this)
+                }
+            }
+        })
 
-        /** More tiles: https://wiki.openstreetmap.org/wiki/Tiles , es necfesario quitarlñe los simblos de $ al pegar la url*/
-        const tileURL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 
-        L.tileLayer(tileURL).addTo(map);
-        L.marker([-12.195766, -76.971827]).addTo(map);
+        function geolocation(vue) {
+            if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    drawMap(position.coords.latitude, position.coords.longitude)
+                })
+            }else {
+                console.log('La geolocolazacion no es soportada')
+            }
+        }     
+        function drawMap(latitude, longitude) {
+            const coordinates = [latitude, longitude]
+            const map = L.map('mapid').setView(coordinates, 19);
+
+            /** More tiles: https://wiki.openstreetmap.org/wiki/Tiles , es necfesario quitarlñe los simblos de $ al pegar la url*/
+            const tileURL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+
+            L.tileLayer(tileURL).addTo(map);
+            L.marker(coordinates).addTo(map)
+                .bindPopup('Estás Aquí')
+                .openPopup();
+        }   
     </script>
 </body>
 </html>
