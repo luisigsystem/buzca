@@ -16,6 +16,7 @@ Route.get('/main', 'signinup/signupController.main')
     /** Partner */
 Route.on('/partner/login').render('partner/login')
 Route.on('/partner/signup').render('partner/signup')
+Route.on('/partner/messages').render('partner/messages')
 
 Route.post('/partner/signup', 'signinup/signupController.savePartner')
 Route.post('/partner/complete', 'partner/RegisterController.setSkill')
@@ -28,7 +29,8 @@ Route.get('/partner', 'partner/MainController.index')
 /** Logged */
 
     /** Partner */
-Route.get('/partner/:email', 'partner/MainController.loadProfile')
+Route.get('/partner/profile/:email', 'partner/MainController.loadProfile')
 Route.get('/logout', 'signinup/SigninController.logout')
 
 Route.post('/save/position', 'FrontRequest.saveLastPosition')
+Route.get('/partner/services', 'partner/MainController.loadServices')

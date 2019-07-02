@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <title>Mis Servicios - Partner</title>
+    <style>
+        .good {
+            color: #FFC107;
+        }
+        .bad {
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div style="padding: 20px;">
+            <a href="/partner"><i class="fas fa-long-arrow-alt-left"></i></a>            
+        </div>
+        <div class="box">
+            <form action="">
+
+                <div class="box">
+                    <h1 class="title">Mis Servicios</h1>
+                    <p>Nombre de Usuario</p>
+                    <span><b>{{ user.username }}</b></span><br>
+                </div>
+                <div class="box">
+                        <p>Habilidad</p>
+                        <input type="text" class="input" value="{{ user.skill }}" name="skill">
+                        <p>Precios a establecer</p>
+                        <input type="text" class="input" placeholder="S/.0.00" name="price">                        
+                </div>
+                <div class="box">
+                    <p>Valoración</p>
+                    <i class="fas fa-star good"></i>
+                    <i class="fas fa-star good"></i>
+                    <i class="fas fa-star good"></i>
+                    <i class="fas fa-star good"></i>
+                    <i class="fas fa-star bad"></i>
+                </div>
+                <center>
+                    <input type="submit" class="button is-info" value="Guardar Cambios">
+                </center>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
