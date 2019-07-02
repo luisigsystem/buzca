@@ -21,10 +21,12 @@
                     <div class="box" v-if="step==1" >
                         <h3 class="title">Escoge una categoría</h3>
                         <select class="input" v-model="category" name="" id="" required>
-                            <option value="Gasfitero">Gasfitero</option>
-                            <option value="Carpintero">Carpintero</option>
-                            <option value="Limpieza">Limpieza</option>
-                            <option value="Técnico">Técnico</option>
+                            <option value="Carpintería">Carpintería</option>
+                            <option value="Gasfitería">Gasfitería</option>
+                            <option value="Educación">Educación</option>
+                            <option value="Gastronomía">Gastronomía</option>
+                            <option value="Automotriz">Automotriz</option>
+                            <option value="Entretenimiento">Entretenimiento</option>
                             <option value="Electricista">Electricista</option>
                         </select><br><br>
                         <input type="button" @click="sumStep" class="button is-link" value="Continuar" />

@@ -49,6 +49,7 @@
 
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
    crossorigin=""></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
@@ -56,24 +57,23 @@
             el: '#app',
             delimiters: ['{(', ')}'],
             data: {
-                position: [0, 0],
-                latitude: 0,
-                longitude: 0,
+                position: [0, 0]
             },
             created: function() {
                 this.map()
             },
             methods: {
                 map: function() {
-                    geolocation(this)
+                    locate(this)
                 }
             }
         })
 
 
-        function geolocation(vue) {
+        function locate(vue) {
             if(navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
+                    vue.position = [position.coords.latitude, position.coords.longitude]
                     drawMap(position.coords.latitude, position.coords.longitude)
                 })
             }else {
@@ -82,7 +82,7 @@
         }     
         function drawMap(latitude, longitude) {
             const coordinates = [latitude, longitude]
-            const map = L.map('mapid').setView(coordinates, 19);
+            const map = L.map('mapid').setView(coordinates, 17);
 
             /** More tiles: https://wiki.openstreetmap.org/wiki/Tiles , es necfesario quitarlñe los simblos de $ al pegar la url*/
             const tileURL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -91,7 +91,18 @@
             L.marker(coordinates).addTo(map)
                 .bindPopup('Estás Aquí')
                 .openPopup();
+
+            saveLastLocation(coordinates);
         }   
+        function saveLastLocation(position) {
+            axios.post('/save/position', {
+                position
+            }).then(result => {
+                console.log(result);
+            }).catch(error => {
+                console.log(error);
+            });
+        }
     </script>
 </body>
 </html>

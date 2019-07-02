@@ -30,3 +30,5 @@ Route.get('/partner', 'partner/MainController.index')
     /** Partner */
 Route.get('/partner/:email', 'partner/MainController.loadProfile')
 Route.get('/logout', 'signinup/SigninController.logout')
+
+Route.post('/save/position', 'FrontRequest.saveLastPosition')
