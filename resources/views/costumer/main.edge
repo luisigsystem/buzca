@@ -36,7 +36,7 @@
             <h1>MENÚ PRINCIPAL</h1>    
             <div id="nav">
                 <form action="">
-                    <input class="button" type="search" placeholder="Buscar" style="text-align: left; width: 60%;" ><a href="#services" class="button is-info" ><i class="fas fa-list-ul"></i></a>
+                    <input class="button" type="search" placeholder="Buscar" style="text-align: left; width: 60%;" ><a href="#services" class="button is-success" ><i class="fas fa-list-ul"></i></a>
                     <div class="profile" title="Mi perfil" onclick="showPopup()"><i class="fas fa-user-circle"></i></div>
                     <div class="box popup-profile" id="popup-profile" style="display: none">
                         <a href="/profile/{{ auth.user.username }}" class="option"><div class="option">Mi Perfil</div></a>
@@ -68,13 +68,6 @@
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
-        // var nav = new Vue({
-        //     el: '#nav',
-        //     delimiters: ['{(', ')}'],
-        //     data: {
-        //         popup: false;
-        //     }
-        // });
         var appMap = new Vue({
             el: '#app',
             delimiters: ['{(', ')}'],

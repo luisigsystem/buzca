@@ -10,8 +10,10 @@ Route.on('/').render('index')
 Route.on('/login').render('costumer/login')
 Route.on('/signup').render('costumer/signup')
 
-Route.post('/signup', 'signinup/signupController.saveCostumer')
+Route.post('/signup', 'signinup/signupController.saveCustomer')
 Route.get('/main', 'signinup/signupController.main')
+
+Route.post('/login', 'signinup/signinController.loginCustomer')
 
     /** Partner */
 Route.on('/partner/login').render('partner/login')

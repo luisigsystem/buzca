@@ -6,22 +6,34 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Buzca</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
+    <style>
+        body {
+            font-family: 'Helvetica';
+        }
+        .title {
+            text-align: center;
+            margin: 5px;
+        }
+        .title span {
+            color: #1ab71a;
+        }
+    </style>
 </head>
 
 <body>
     <div>
         <div class="container" id="app">
             <div>
-                <h1 class="title">Buzca</h1>
+                <h1 class="title">Bu<span>z</span>ca</h1>
             </div>
-            <div style="width:190px; margin: 0 auto; margin-top: 24px; margin-bottom: 24px;">
-                <button class="button" @click="user = 'client'" v-bind:class="{ 'is-info': user == 'client' }">Solicitantes</button>
+            <center style="margin-top: 24px; margin-bottom: 24px;">
+                <button class="button" @click="user = 'client'" v-bind:class="{ 'is-success': user == 'client' }">Solicitantes</button>
                 <button class="button" @click="user = 'partner'" v-bind:class="{ 'is-link': user == 'partner' }">Partner</button>
-            </div>
+            </center>
             <div class="box" v-if="user == 'client'">
                 <h1>Solicitantes</h1>
-                <a class="box button is-info is-inverted" href="/login">Iniciar Sesion</a>
-                <a class="box button is-info" href="/signup">Registrate</a>
+                <a class="box button is-success is-inverted" href="/login">Iniciar Sesion</a>
+                <a class="box button is-success" href="/signup">Registrate</a>
             </div>
             <div class="box" v-if="user == 'partner'">
                 <h1>Partner</h1>

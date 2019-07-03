@@ -46,7 +46,7 @@ class SignupController {
         }  
     }
 
-    async saveCostumer({request, response, auth}) {
+    async saveCustomer({request, response, auth}) {
         try {
             const user = new User()
 
