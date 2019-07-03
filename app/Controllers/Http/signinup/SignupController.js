@@ -31,7 +31,7 @@ class SignupController {
             user.type = 'partner'
             user.password = password
 
-            let existUser = await Database.select('email').from('users').where('email', user.email).first()
+            let existUser = await Database.select('email').from('users').where('email', user.email).where('type', 'partner').first()
             if(existUser){
                 return view.render('partner/signup', {msg: "Usuario ya existe"})
             }	
@@ -68,10 +68,10 @@ class SignupController {
             user.username = username
             user.email = email
             user.dist = dist
-            user.type = 'user'
+            user.type = 'customer'
             user.password = password
 
-            let existUser = await Database.select('email').from('users').where('email', user.email).first()
+            let existUser = await Database.select('email').from('users').where('email', user.email).where('type', 'customer').first()
             if(existUser){
                 return view.render('signup', {msg: "Usuario ya existe"})
             }	

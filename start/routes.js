@@ -10,7 +10,7 @@ Route.on('/').render('index')
 Route.on('/login').render('costumer/login')
 Route.on('/signup').render('costumer/signup')
 
-Route.post('/main', 'signinup/signupController.saveCostumer')
+Route.post('/signup', 'signinup/signupController.saveCostumer')
 Route.get('/main', 'signinup/signupController.main')
 
     /** Partner */
@@ -26,10 +26,16 @@ Route.get('/partner', 'partner/MainController.index')
 
 
 /** Logged */
+Route.get('/logout', 'signinup/SigninController.logout')
+
+    /** Costumer */
+Route.get('/profile/:email', 'customer/MainController.loadProfile')
+
+Route.get('/messages', 'customer/MainController.loadMessages')
+Route.get('/historial', 'customer/MainController.loadHistorial')
 
     /** Partner */
 Route.get('/partner/profile/:email', 'partner/MainController.loadProfile')
-Route.get('/logout', 'signinup/SigninController.logout')
 
 Route.post('/save/position', 'FrontRequest.saveLastPosition')
 

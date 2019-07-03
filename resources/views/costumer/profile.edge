@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <title>Perfil - Buzca</title>
+</head>
+<body>
+    <div>
+        <div style="padding: 20px;">
+            <a href="/main"><i class="fas fa-long-arrow-alt-left"></i></a>            
+        </div>
+        <div class="box">
+            <div class="box">
+                <h1 class="title">Mi Perfil</h1>
+            </div>
+            <div class="box">
+                <p>Nombre de Usuario</p>
+                <span><b>{{ user.username }}</b></span><br>
+                <p>Nombre</p>
+                <span><b>{{ user.name }}</b></span><br>
+                <p>Apellidos</p>
+                <span><b>{{ user.lastname }}</b></span><br>
+                <p>Correo</p>
+                <span><b>{{ user.email }}</b></span><br>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

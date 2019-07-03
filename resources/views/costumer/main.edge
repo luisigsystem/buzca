@@ -4,13 +4,134 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Principal</title>
+    <title>Completa tus datos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+    crossorigin=""/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <style>
+        #mapid {
+            height: 680px; 
+        }
+        .profile {
+            display: inline;
+        }
+        .profile i {
+            color: #828b98;
+            font-size: 36px;
+            margin-left: 10%;
+        }
+        .popup-profile {
+            width: 170px;
+            position: relative;
+            margin-left: 160px;
+            z-index: 99;
+        }
+    </style>
 </head>
-<body>
+<body> 
     <div>
+        <div class="box">
+            <h1>MENÚ PRINCIPAL</h1>    
+            <div id="nav">
+                <form action="">
+                    <input class="button" type="search" placeholder="Buscar" style="text-align: left; width: 60%;" ><a href="#services" class="button is-info" ><i class="fas fa-list-ul"></i></a>
+                    <div class="profile" title="Mi perfil" onclick="showPopup()"><i class="fas fa-user-circle"></i></div>
+                    <div class="box popup-profile" id="popup-profile" style="display: none">
+                        <a href="/profile/{{ auth.user.username }}" class="option"><div class="option">Mi Perfil</div></a>
+                        <a href="/messages" class="option"><div class="option">Mensajes</div></a>
+                        <a href="/historial" class="option"><div class="option">Historial</div></a>
+                        <a href="/logout" class="option is-danger is-outlined" style="color:#d42c2c;"><div class="option">Cerrar sesion</div></a>
+                    </div>
+                </form>            
+            </div>    
+        </div>
         <div>
-            <h2>{{ msg }}</h2>
+            <div id="app"></div>
+            <div id="mapid"></div>
+        </div>
+        <div id="services">
+            <div class="box">
+                <div class="box"><span>Gasfitero</span></div>
+                <div class="box"><span>Carpintero</span></div>
+                <div class="box"><span>Limpieza</span></div>
+                <div class="box"><span>Técnico</span></div>
+                <div class="box"><span>Electricista</span></div>
+            </div>
         </div>
     </div>
+
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+   crossorigin=""></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        // var nav = new Vue({
+        //     el: '#nav',
+        //     delimiters: ['{(', ')}'],
+        //     data: {
+        //         popup: false;
+        //     }
+        // });
+        var appMap = new Vue({
+            el: '#app',
+            delimiters: ['{(', ')}'],
+            data: {
+                position: [0, 0]
+            },
+            created: function() {
+                this.map()
+            },
+            methods: {
+                map: function() {
+                    locate(this)
+                }
+            }
+        })
+
+
+        function locate(vue) {
+            if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    vue.position = [position.coords.latitude, position.coords.longitude]
+                    drawMap(position.coords.latitude, position.coords.longitude)
+                })
+            }else {
+                console.log('La geolocolazacion no es soportada')
+            }
+        }     
+        function drawMap(latitude, longitude) {
+            const coordinates = [latitude, longitude]
+            const map = L.map('mapid').setView(coordinates, 17);
+
+            /** More tiles: https://wiki.openstreetmap.org/wiki/Tiles , es necfesario quitarlñe los simblos de $ al pegar la url*/
+            const tileURL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+
+            L.tileLayer(tileURL).addTo(map);
+            L.marker(coordinates).addTo(map)
+                .bindPopup('Estás Aquí')
+                .openPopup();
+
+            saveLastLocation(coordinates);
+        }   
+        function saveLastLocation(position) {
+            axios.post('/save/position', {
+                position
+            }).then(result => {
+                console.log(result);
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+        function showPopup() {
+            var popup = document.getElementById('popup-profile');
+            if(popup.style.display == 'none')
+                popup.style.display = 'block'
+            else if(popup.style.display == 'block')
+                popup.style.display = 'none'
+        }
+    </script>
 </body>
 </html>

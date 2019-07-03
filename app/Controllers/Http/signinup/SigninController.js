@@ -7,7 +7,7 @@ class SigninController {
         try {
             const  { email, password } = request.all()
             
-            let user = await Database.select('email').from('users').where('email', email).first()
+            let user = await Database.select('email').from('users').where('email', email).where('type', 'partner').first()
             console.log({user: user})
             if(!user){
                 return view.render('/partner/login', {msg: "Usuario no existe"})
@@ -19,6 +19,25 @@ class SigninController {
         } catch (error) {
             console.error({error: error})
             return response.redirect('/partner/login')            
+        }
+    }
+
+    async loginCustomer({request, response, auth}) {
+        try {
+            const  { email, password } = request.all()
+            
+            let user = await Database.select('email').from('users').where('email', email).where('type', 'customer').first()
+            console.log({user: user})
+            if(!user){
+                return view.render('/login', {msg: "Usuario no existe"})
+            }	
+
+            await auth.attempt(email, password)
+
+            return response.redirect('/app')
+        } catch (error) {
+            console.error({error: error})
+            return response.redirect('/login')            
         }
     }
 
