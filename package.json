@@ -32,5 +32,8 @@
     "dotenv": "^7.0.0",
     "mysql": "^2.17.1"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "autoload": {
+    "App": "./app"
+  }
 }
