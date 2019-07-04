@@ -17,18 +17,25 @@
             <div class="box">
                 <div>
                     <div class="box">
-                        <div id="mapid" style="height: 200px;"></div>
+                        <!-- <div id="mapid" style="height: 200px;"></div> -->
                     </div>
                 </div>
                 <div id="app">
                     <div class="box">
-                        <p>Se encuentra a atanto metros de distancia</p>
+                        <p>Se encuentra a {( distance )} {( unity )} de distancia</p>
+                    </div>
+                    <div class="box">
+                        <center><p>{{ partner.skill }}</p></center>                        
                     </div>
                     <div class="box">
                         <p>Precio: S/.{{ partner.priceService }} (por hora)</p>
+                        <br>
+                        <p>Horas a solicitar:</p>
                         <input type="number" class="input" v-model="horas" @keyUp="calcTotal" placeholder="Horas a Contratar">
+                        <br><br>
                         <p><b>Total: S/.{( total )}</b></p>
                     </div>
+                    <button class="input button is-success">Solicitar Ahora</button>
                 </div>
             </div>
         </div>
@@ -56,19 +63,35 @@
             data: {
                 price: 0.0,
                 horas: 0,
-                total: 0
+                total: 0,
+                distance: 0,
+                unity: "metros"
             },
             created: function() {
                 this.setPrice(),
-                this.map()
+                this.map(),
+                this.setDistance()
             },
             methods: {
                 map: function() {
                     locate(this)
                 },
-                setPrice: function() {
+                setDistance: function() {
                     let stringPrice = "{{ partner.priceService }}"
                     this.price = parseInt(stringPrice)
+                },
+                setPrice: function() {
+                    // this.distance = "{{ dist.distance.$numberDouble }}"
+                    let stringDistance = "{{ dist.distance.$numberDouble }}"
+                    this.distance = parseInt(stringDistance)
+                    this.distance *= 1000 //km en m
+                    if( this.distance >= 1000) {
+                        this.unity = "km"
+                        this.distance = this.distance / 1000 //m en km
+                    }
+                    else{
+                        this.unity = "metros"
+                    }
                 },
                 calcTotal: function() {
                     this.horas = parseInt(this.horas)
