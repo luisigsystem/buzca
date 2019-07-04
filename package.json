@@ -1,19 +1,21 @@
 {
   "name": "buzca",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "adonis-version": "4.1.0",
-  "description": "",
+  "description": "Buzca",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node ace test"
+    "test": "node ace test",
+    "migration:run": "node ace migration:run",
+    "migration:status": "node ace migration:status"
   },
   "keywords": [
     "adonisjs",
     "adonis-app"
   ],
-  "author": "",
-  "license": "MIT",
+  "author": "BUZCA",
+  "license": "UNLICENSED",
   "private": true,
   "dependencies": {
     "@adonisjs/ace": "^5.0.8",
@@ -33,8 +35,5 @@
   "devDependencies": {},
   "autoload": {
     "App": "./app"
-  },
-  "engines": {
-    "node": "^10.15.1"
   }
 }

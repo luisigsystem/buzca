@@ -10,21 +10,21 @@ Route.on('/').render('index')
 Route.on('/login').render('costumer/login')
 Route.on('/signup').render('costumer/signup')
 
-Route.post('/signup', '/signinup/signupController.saveCustomer')
-Route.get('/main', '/signinup/signupController.main')
+Route.post('/signup', 'signinup/signupController.saveCustomer')
+Route.get('/main', 'signinup/signupController.main')
 
-Route.post('/login', '/signinup/signinController.loginCustomer')
+Route.post('/login', 'signinup/signinController.loginCustomer')
 
     /** Partner */
 Route.on('/partner/login').render('partner/login')
 Route.on('/partner/signup').render('partner/signup')
 
-Route.post('/partner/signup', '/signinup/signupController.savePartner')
-Route.post('/partner/complete', '/partner/RegisterController.setSkill')
+Route.post('/partner/signup', 'signinup/signupController.savePartner')
+Route.post('/partner/complete', 'partner/RegisterController.setSkill')
 
-Route.post('/partner/login', '/signinup/signinController.loginPartner')
+Route.post('/partner/login', 'signinup/signinController.loginPartner')
 
-Route.get('/partner', '/partner/MainController.index')
+Route.get('/partner', 'partner/MainController.index')
 
 
 /** Logged */
