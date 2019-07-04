@@ -1,7 +1,7 @@
 'use strict'
 
-const path = require('path')
 const Database = use('Database')
+const path = require('path')
 const User = use(path.join(__dirname, '../../../Models/User' ))
 // const User = use('App/Models/User')
 const axios = require('axios')
