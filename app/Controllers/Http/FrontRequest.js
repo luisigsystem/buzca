@@ -66,6 +66,18 @@ class FrontRequest {
                 })
         })
     }
+    
+    async getCalification({request}) {
+        return new Promise((resolve, reject) => {
+            return webhooks.getCalification(request.body.username)
+                .then(result => {
+                    resolve(result)
+                })
+                .catch(error => {
+                    reject(error)  
+                })
+        })
+    }
 
 }
 

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <title>Contactar - Buzca</title>
+</head>
+<body>
+    <div>
+        <div style="padding: 20px;">
+            <a href="/main" style="color:#23d160;"><i class="fas fa-long-arrow-alt-left"></i></a>            
+        </div>
+        <div>
+            <div class="box">
+                <div>
+                    <div class="box">
+                        <div id="mapid" style="height: 200px;"></div>
+                    </div>
+                </div>
+                <div id="app">
+                    <div class="box">
+                        <p>Se encuentra a atanto metros de distancia</p>
+                    </div>
+                    <div class="box">
+                        <p>Precio: S/.{{ partner.priceService }} (por hora)</p>
+                        <input type="number" class="input" v-model="horas" @keyUp="calcTotal" placeholder="Horas a Contratar">
+                        <p><b>Total: S/.{( total )}</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+    crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var map;
+        var greenIcon = L.icon({
+            iconUrl: 'marker-green-icon-2x.png',
+            // shadowUrl: 'leaf-shadow.png',
+            iconSize: [25, 41],
+            // shadowSize:   [30, 30],
+            iconAnchor:   [13, 45],
+            // shadowAnchor: [4, 62],
+            popupAnchor:  [0, -38],
+        });
+
+        var app = new Vue({
+            el: '#app',
+            delimiters: ['{(', ')}'],
+            data: {
+                price: 0.0,
+                horas: 0,
+                total: 0
+            },
+            created: function() {
+                this.setPrice(),
+                this.map()
+            },
+            methods: {
+                map: function() {
+                    locate(this)
+                },
+                setPrice: function() {
+                    let stringPrice = "{{ partner.priceService }}"
+                    this.price = parseInt(stringPrice)
+                },
+                calcTotal: function() {
+                    this.horas = parseInt(this.horas)
+                    this.total = this.price * this.horas
+                },
+            }
+        });
+
+        function locate(vue) {
+            try {
+                if(navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        latitude = position.coords.latitude;
+                        longitude = position.coords.longitude;
+                        vue.position = [position.coords.latitude, position.coords.longitude]
+                        drawMap(position.coords.latitude, position.coords.longitude)
+                    })
+                }else {
+                    console.log('La geolocolazacion no es soportada')
+                    map = L.map('mapid').setView([-12.092233, -77.033312], 15);                
+                }                
+            } catch (error) {
+                map = L.map('mapid').setView([-12.092233, -77.033312], 15);                
+            }
+        }    
+        function drawMap(latitude, longitude) {
+            const position = [latitude, longitude]
+            map = L.map('mapid').setView(position, 16);
+
+            /** More tiles: https://wiki.openstreetmap.org/wiki/Tiles , es necfesario quitarlñe los simblos de $ al pegar la url*/
+            const tileURL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+
+            L.tileLayer(tileURL).addTo(map);
+            L.marker(position, {icon: greenIcon}).addTo(map)
+                .bindPopup('Estás Aquí')
+                .openPopup();
+
+        }   
+    </script>
+</body>
+</html>

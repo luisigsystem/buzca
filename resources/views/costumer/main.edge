@@ -37,6 +37,12 @@
         .c-hand {
             cursor: pointer;
         }
+        .good {
+            color: #FFC107;
+        }
+        .bad {
+            color: #9E9E9E;
+        }
     </style>
 </head>
 <body> 
@@ -203,13 +209,12 @@
                         
                         self.services.forEach(partner => {
                             L.marker( [partner.lastPosition[0].$numberDouble, partner.lastPosition[1].$numberDouble] ).addTo(map)
-                            .bindPopup( '<a href="#'+partner.username+'" >'+partner.name+' '+partner.lastname+'</a><br>'+partner.skill )
+                            .bindPopup( '<a href="/service/'+partner.username+'" >'+partner.name+' '+partner.lastname+'</a><br>'+partner.skill )
                             .openPopup();
                             
                         });
 
                     }).catch(error => {
-                        console.log(':c');
                         console.log(error);
                     });
                 },

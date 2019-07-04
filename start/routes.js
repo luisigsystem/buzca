@@ -35,10 +35,12 @@ Route.get('/profile/:email', 'customer/MainController.loadProfile')
 
 Route.get('/messages', 'customer/MainController.loadMessages')
 Route.get('/historial', 'customer/MainController.loadHistorial')
+Route.get('/services/contact/:partner', 'customer/MatchController.index')
 
 Route.post('/filter/services', 'FrontRequest.filterServices')
 Route.get('/service/:partner', 'customer/MainController.getService')
 Route.post('/service/setValoration', 'FrontRequest.setValoration')
+Route.post('/service/getCalification', 'FrontRequest.getCalification')
 
     /** Partner */
 Route.get('/partner/profile/:email', 'partner/MainController.loadProfile')
