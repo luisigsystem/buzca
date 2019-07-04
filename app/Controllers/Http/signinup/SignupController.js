@@ -42,7 +42,7 @@ class SignupController {
 
         } catch (error) {
             console.error(error) 
-            return response.send('No Excelente')            
+            return response.send('Hubo un error ' + error)            
         }  
     }
 
