@@ -10,7 +10,7 @@ class RegisterController {
 
             const {skill, latitude, longitude} = request.all()
             
-            let res = await axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/completeUser', {
+            let res = await axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/completePartner', {
                 email: auth.user.email,
                 skill: skill,
                 latitude: latitude,

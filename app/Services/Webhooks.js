@@ -31,6 +31,19 @@ class Webhooks {
         })
     }
 
+    saveStatusService(email, status) {
+        return new Promise((resolve, reject) => {
+            axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/setServiceStatus', {
+                email,    
+                status
+            }).then(result => {
+                resolve(result.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    }
+
 }
 
 module.exports = Webhooks

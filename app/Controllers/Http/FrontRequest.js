@@ -19,9 +19,21 @@ class FrontRequest {
     }
 
     async filterServices({request}) {
-        console.log(request.body.latitude, request.body.longitude, request.body.skill)
+        // console.log(request.body.latitude, request.body.longitude, request.body.skill)
         return new Promise((resolve, reject) => {
             return webhooks.filterServices(request.body.latitude, request.body.longitude, request.body.skill)
+            .then(result => {
+                resolve(result)
+            })
+            .catch(error => {
+                reject(error)  
+            })
+        })
+    }
+    
+    async saveStatusService({request, auth}) {
+        return new Promise((resolve, reject) => {
+            return webhooks.saveStatusService(auth.user.email, request.body.status)
                 .then(result => {
                     resolve(result)
                 })
