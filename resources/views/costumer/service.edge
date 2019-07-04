@@ -20,6 +20,19 @@
                     <span><b>{{ partner.name }} {{ partner.lastname }}</b></span><br>
                 </div>
                 <div class="box">
+                    <center>
+                        <span class="title">S/.{{ partner.priceService}} </span><span>x hora</span>
+                    </center>
+                </div>
+                <div class="box">
+                    <p class="subtitle">Descripción</p>
+                    @if(partner.description)
+                    <p>{{ partner.description }}</p>
+                    @else
+                    <p style="color: gray; text-align: center;"><i> no hay descripción </i></p>
+                    @endif
+                </div>
+                <div class="box">
                     <div class="control">
                         <center>
                             <label class="radio">
@@ -74,7 +87,6 @@
                         console.log(result);
                         alert('Has valorado con ' + self.calification + ' estrellas' )
                     }).catch( error => {
-                        console.log('sad');
                         console.log(error);
                     })
                 }

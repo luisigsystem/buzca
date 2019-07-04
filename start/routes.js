@@ -45,7 +45,7 @@ Route.get('/partner/profile/:email', 'partner/MainController.loadProfile')
 
 Route.post('/save/position', 'FrontRequest.saveLastPosition')
 Route.post('/partner/service/setStatus', 'FrontRequest.saveStatusService')
-Route.post('/partner/service/setPrice', 'FrontRequest.savePriceService')
+Route.post('/partner/service/setDescription', 'FrontRequest.saveDescriptionService')
 
 Route.get('/partner/services', 'partner/MainController.loadServices')
 Route.get('/partner/messages', 'partner/MainController.loadMessages')

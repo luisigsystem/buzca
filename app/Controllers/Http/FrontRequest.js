@@ -43,9 +43,9 @@ class FrontRequest {
         })
     }
     
-    async savePriceService({request, auth}) {
+    async saveDescriptionService({request, auth}) {
         return new Promise((resolve, reject) => {
-            return webhooks.savePriceService(auth.user.email, request.body.price)
+            return webhooks.saveDescriptionService(auth.user.email, request.body.price, request.body.description)
                 .then(result => {
                     resolve(result)
                 })

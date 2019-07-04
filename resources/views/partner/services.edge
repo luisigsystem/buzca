@@ -107,9 +107,11 @@
                     <input type="text" class="input" value="{{ user.skill }}" name="skill" readonly>
                     <p>Precios a establecer</p>
                     <input type="text" class="input" placeholder="S/.0.00" name="price" v-model="price">  
+                    <p>Describe lo que haces</p>
+                    <textarea class="input" style="min-height: 100px; max-height: 150px;" placeholder="Soy experto en..." name="description" v-model="description"></textarea>
                     <br><br>
                     <center>
-                        <input type="button" class="button is-info" value="Guardar Cambios" @click="savePrice">
+                        <input type="button" class="button is-info" value="Guardar Cambios" @click="saveDescription">
                     </center>
                 </div>
             </form>
@@ -125,7 +127,8 @@
             data: {
                 checked: "",
                 status: "{{ user.stateService }}",
-                price: "{{ user.priceService }}"
+                price: "{{ user.priceService }}",
+                description: "{{ user.description }}"
             },
             created: function() {
                 this.getStatus()
@@ -156,13 +159,14 @@
                         console.log(error);
                     })
                 },
-                savePrice: function() {   
+                saveDescription: function() {   
                     if(this.price != "") {
-                        axios.post('/partner/service/setPrice', {
-                            price: this.price
+                        axios.post('/partner/service/setDescription', {
+                            price: this.price,
+                            description: this.description
                         }).then( result => {
                             console.log(result);
-                            alert('¡Precio Modificado!')
+                            alert('¡Datos Modificado!')
                         }).catch( error => {
                             console.log(error);
                         })
