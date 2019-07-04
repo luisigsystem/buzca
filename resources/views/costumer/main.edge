@@ -51,13 +51,22 @@
                         <option value="Electricista">Electricista</option>
                     </select>
                     <!-- <input class="button" type="search" placeholder="Buscar"  > -->
-                    <a href="#" class="button is-success" @click="filterServices" ><i class="fas fa-list-ul"></i></a>
+                    <a href="#" class="button is-success" @click="filterServices" ><i class="fas fa-search-location"></i></a>
                     <div class="profile" title="Mi perfil" onclick="showPopup()"><i class="fas fa-user-circle"></i></div>
                     <div class="box popup-profile" id="popup-profile" style="display: none">
                         <a href="/profile/{{ auth.user.username }}" class="option"><div class="option">Mi Perfil</div></a>
                         <a href="/messages" class="option"><div class="option">Mensajes</div></a>
                         <a href="/historial" class="option"><div class="option">Historial</div></a>
                         <a href="/logout" class="option is-danger is-outlined" style="color:#d42c2c;"><div class="option">Cerrar sesion</div></a>
+                    </div>
+                    <div v-if="services.length != 0">
+                        <br>
+                        <center><h1>Resultados</h1></center>                        
+                        <div class="box" v-bind:id="service.username" v-for="service in services">
+                            <p>Nombres: {( service.name )} {( service.lastname )}</p>
+                            <p>Servicio: {( service.skill )}</p>
+                            <p>Valoración: </p>
+                        </div>
                     </div>
                 </form>            
             </div>    
@@ -75,9 +84,18 @@
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
+        var map;
         var latitude = 0;
         var longitude = 0;
-        var map;
+        var greenIcon = L.icon({
+            iconUrl: 'marker-green-icon-2x.png',
+            // shadowUrl: 'leaf-shadow.png',
+            iconSize: [25, 41],
+            // shadowSize:   [30, 30],
+            iconAnchor:   [13, 45],
+            // shadowAnchor: [4, 62],
+            popupAnchor:  [0, -38],
+        });
 
         var appMap = new Vue({
             el: '#app',
@@ -123,7 +141,7 @@
             const tileURL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 
             L.tileLayer(tileURL).addTo(map);
-            L.marker(position).addTo(map)
+            L.marker(position, {icon: greenIcon}).addTo(map)
                 .bindPopup('Estás Aquí')
                 .openPopup();
 
@@ -167,10 +185,12 @@
                         console.log(':)');
                         console.log(result);
                         self.services = result.data.services
+
+                        // map.removeLayer(marker)
                         
                         self.services.forEach(partner => {
                             L.marker( [partner.lastPosition[0].$numberDouble, partner.lastPosition[1].$numberDouble] ).addTo(map)
-                            .bindPopup( partner.name+' '+partner.lastname+'<br>'+partner.skill )
+                            .bindPopup( '<a href="#'+partner.username+'" >'+partner.name+' '+partner.lastname+'</a><br>'+partner.skill )
                             .openPopup();
                             
                         });
