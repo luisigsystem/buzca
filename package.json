@@ -32,7 +32,7 @@
   },
   "devDependencies": {},
   "autoload": {
-    "App": "./"
+    "App": "./app"
   },
   "engines": {
     "node": "^10.15.1"
