@@ -44,6 +44,19 @@ class Webhooks {
         })
     }
 
+    savePriceService(email, price) {
+        return new Promise((resolve, reject) => {
+            axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/setPriceService', {
+                email,    
+                price
+            }).then(result => {
+                resolve(result.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    }
+
 }
 
 module.exports = Webhooks

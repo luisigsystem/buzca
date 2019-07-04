@@ -42,6 +42,18 @@ class FrontRequest {
                 })
         })
     }
+    
+    async savePriceService({request, auth}) {
+        return new Promise((resolve, reject) => {
+            return webhooks.savePriceService(auth.user.email, request.body.price)
+                .then(result => {
+                    resolve(result)
+                })
+                .catch(error => {
+                    reject(error)  
+                })
+        })
+    }
 
 }
 

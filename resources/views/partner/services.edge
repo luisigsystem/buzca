@@ -95,12 +95,6 @@
                 </center>   
                 <br>
                 <div class="box">
-                        <p>Habilidad</p>
-                        <input type="text" class="input" value="{{ user.skill }}" name="skill">
-                        <p>Precios a establecer</p>
-                        <input type="text" class="input" placeholder="S/.0.00" name="price">  
-                </div>
-                <div class="box">
                     <p>Valoración</p>
                     <i class="fas fa-star good"></i>
                     <i class="fas fa-star good"></i>
@@ -108,9 +102,16 @@
                     <i class="fas fa-star good"></i>
                     <i class="fas fa-star bad"></i>
                 </div>
-                <center>
-                    <input type="submit" class="button is-info" value="Guardar Cambios">
-                </center>
+                <div class="box">
+                    <p>Habilidad</p>
+                    <input type="text" class="input" value="{{ user.skill }}" name="skill" readonly>
+                    <p>Precios a establecer</p>
+                    <input type="text" class="input" placeholder="S/.0.00" name="price" v-model="price">  
+                    <br><br>
+                    <center>
+                        <input type="button" class="button is-info" value="Guardar Cambios" @click="savePrice">
+                    </center>
+                </div>
             </form>
         </div>
     </div>
@@ -123,7 +124,8 @@
             delimiters: ['{(', ')}'],
             data: {
                 checked: "",
-                status: "{{ user.stateService }}"
+                status: "{{ user.stateService }}",
+                price: "{{ user.priceService }}"
             },
             created: function() {
                 this.getStatus()
@@ -141,20 +143,29 @@
                     if(enable.checked == true) {
                         this.status = "on"
                         this.checked = "checked"
-                        // alert('Se ha activado')
                     }else {
                         this.status = "off"
                         this.checked = ""
-                        // alert('Se ha desactivado')
                     }
-                    let self = this
+                    
                     axios.post('/partner/service/setStatus', {
-                        status: self.status
+                        status: this.status
                     }).then( result => {
                         console.log(result);
                     }).catch( error => {
                         console.log(error);
                     })
+                },
+                savePrice: function() {   
+                    if(this.price != "") {
+                        axios.post('/partner/service/setPrice', {
+                            price: this.price
+                        }).then( result => {
+                            console.log(result);
+                        }).catch( error => {
+                            console.log(error);
+                        })
+                    }
                 }
             }
         })
