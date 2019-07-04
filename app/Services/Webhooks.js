@@ -10,7 +10,7 @@ class Webhooks {
                 email,
                 position
             }).then(result => {
-                resolve(result)
+                resolve(result.data)
             }).catch(err => {
                 reject(err)
             })
@@ -26,9 +26,9 @@ class Webhooks {
                 longitude, 
                 skill
             }).then(result => {
-                console.log(result)
+                console.log(result.data)
                 console.log(':)')
-                resolve(result)
+                resolve(result.data)
             }).catch(err => {
                 console.log(err)
                 console.log(':c')
