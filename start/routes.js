@@ -41,6 +41,7 @@ Route.post('/filter/services', 'FrontRequest.filterServices')
 Route.get('/service/:partner', 'customer/MainController.getService')
 Route.post('/service/setValoration', 'FrontRequest.setValoration')
 Route.post('/service/getCalification', 'FrontRequest.getCalification')
+Route.post('/service/request', 'customer/MatchController.requestService')
 
     /** Partner */
 Route.get('/partner/profile/:email', 'partner/MainController.loadProfile')

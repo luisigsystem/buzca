@@ -31,11 +31,11 @@
                         <p>Precio: S/.{{ partner.priceService }} (por hora)</p>
                         <br>
                         <p>Horas a solicitar:</p>
-                        <input type="number" class="input" v-model="horas" @keyUp="calcTotal" placeholder="Horas a Contratar">
+                        <input type="number" class="input" v-model="time" @keyUp="calcTotal" placeholder="Horas a Contratar">
                         <br><br>
                         <p><b>Total: S/.{( total )}</b></p>
                     </div>
-                    <button class="input button is-success">Solicitar Ahora</button>
+                    <button class="input button is-success" @click="requestService">Solicitar Ahora</button>
                 </div>
             </div>
         </div>
@@ -62,14 +62,16 @@
             delimiters: ['{(', ')}'],
             data: {
                 price: 0.0,
-                horas: 0,
+                time: 0,
                 total: 0,
                 distance: 0,
-                unity: "metros"
+                unity: "metros",
+                service: "{{ partner.skill }}",
+                usernamePartner: "{{ partner.username }}"
             },
             created: function() {
                 this.setPrice(),
-                this.map(),
+                // this.map(),
                 this.setDistance()
             },
             methods: {
@@ -94,9 +96,29 @@
                     }
                 },
                 calcTotal: function() {
-                    this.horas = parseInt(this.horas)
-                    this.total = this.price * this.horas
+                    this.time = parseInt(this.time)
+                    this.total = this.price * this.time
                 },
+                requestService: function() {
+                    if(this.time <= 0)  {
+                        alert('No se ha introducido las horas')
+                        return
+                    }
+
+                    axios.post('/service/request', {
+                        usernamePartner: this.usernamePartner,
+                        service: this.service,
+                        time: this.time,
+                        price: this.price,
+                        total: this.total
+                    }).then(result => {
+                        console.log(result)
+                        document.location.href = "/historial"
+                    }).catch(error => {
+                        console.log(error)
+                        alert('No se pudo realizar la solicitud')
+                    })
+                }
             }
         });
 

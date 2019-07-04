@@ -36,6 +36,26 @@ class MatchController {
         }
     }
 
+    async requestService({request, auth}) {
+        return new Promise((resolve, reject) => {
+    
+            return axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/matchService', {
+                usernameCustomer: auth.user.username,
+                usernamePartner: request.body.usernamePartner,
+                service: request.body.service,
+                time: request.body.time,
+                price: request.body.price,
+                total: request.body.total,
+            }).then(result => {
+                console.error(result.data)
+                resolve(result.data)
+            }).catch(error => {
+                console.log(error)
+                reject(error)
+            })
+                
+        })
+    }
 }
 
 module.exports = MatchController
