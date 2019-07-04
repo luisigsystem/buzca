@@ -78,6 +78,18 @@ class FrontRequest {
                 })
         })
     }
+    
+    async getPendingCustomers({auth}) {
+        return new Promise((resolve, reject) => {
+            return webhooks.getPendingCustomers(auth.user.email)
+                .then(result => {
+                    resolve(result)
+                })
+                .catch(error => {
+                    reject(error)  
+                })
+        })
+    }
 
 }
 

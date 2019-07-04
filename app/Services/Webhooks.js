@@ -84,6 +84,18 @@ class Webhooks {
         })
     }
 
+    getPendingCustomers(email) {
+        return new Promise((resolve, reject) => {
+            axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/getPendingCustomers', {
+                email
+            }).then(result => {
+                resolve(result.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    }
+
 }
 
 module.exports = Webhooks
