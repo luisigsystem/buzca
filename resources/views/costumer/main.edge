@@ -184,7 +184,10 @@
             },
             methods: {
                 filterServices: function() {
-                    if(this.service_selected == "") return                        
+                    if(this.service_selected == "") {
+                        alert('No ha seleccionado ningún servicio')
+                        return
+                    }                        
                     
                     let self = this
                     axios.post('/filter/services', {

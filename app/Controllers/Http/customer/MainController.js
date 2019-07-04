@@ -4,7 +4,12 @@ const axios = require('axios')
 class MainController {
 
     async index({view}) {
-        return view.render('costumer/main')
+        try {
+            return view.render('costumer/main')
+            
+        } catch (error) {
+            return response.redirect('/login')
+        }
     }
 
     async loadProfile({view, response, auth}) {
@@ -22,7 +27,7 @@ class MainController {
             
         } catch (error) {
             // console.error({error: error})
-            return response.redirect('/partner/login')
+            return response.redirect('/login')
             
         }
     }
@@ -108,6 +113,26 @@ class MainController {
             return response.redirect('/login')
             
         }
+    }
+
+    async getService({view, request, response, auth}) {
+        try {
+            await auth.check()
+            let username = request.params.partner
+
+            let res = await axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/getUser', {
+                username: username
+            })
+            if(res.error) return response.send('Hubo un error')
+            
+            console.error(res.data.user)
+            return view.render('costumer/service', { partner: res.data.user })
+            
+        } catch (error) {
+            console.error({error: error})
+            return response.redirect('/login')
+            
+        }                 
     }
 }
 

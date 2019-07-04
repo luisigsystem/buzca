@@ -30,13 +30,15 @@ Route.get('/partner', 'partner/MainController.index')
 /** Logged */
 Route.get('/logout', 'signinup/SigninController.logout')
 
-    /** Costumer */
+    /** Customer */
 Route.get('/profile/:email', 'customer/MainController.loadProfile')
 
 Route.get('/messages', 'customer/MainController.loadMessages')
 Route.get('/historial', 'customer/MainController.loadHistorial')
 
 Route.post('/filter/services', 'FrontRequest.filterServices')
+Route.get('/service/:partner', 'customer/MainController.getService')
+Route.post('/service/setValoration', 'FrontRequest.setValoration')
 
     /** Partner */
 Route.get('/partner/profile/:email', 'partner/MainController.loadProfile')

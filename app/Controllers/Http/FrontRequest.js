@@ -54,6 +54,18 @@ class FrontRequest {
                 })
         })
     }
+    
+    async setValoration({request, auth}) {
+        return new Promise((resolve, reject) => {
+            return webhooks.setValoration(auth.user.username, request.body.usernamePartner, request.body.calification)
+                .then(result => {
+                    resolve(result)
+                })
+                .catch(error => {
+                    reject(error)  
+                })
+        })
+    }
 
 }
 

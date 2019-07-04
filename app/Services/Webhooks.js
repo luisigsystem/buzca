@@ -57,6 +57,20 @@ class Webhooks {
         })
     }
 
+    setValoration(username, usernamePartner, calification) {
+        return new Promise((resolve, reject) => {
+            axios.post('https://webhooks.mongodb-stitch.com/api/client/v2.0/app/buzcaapp-dnwhd/service/main_application/incoming_webhook/setValoration', {
+                username,    
+                usernamePartner,
+                calification
+            }).then(result => {
+                resolve(result.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    }
+
 }
 
 module.exports = Webhooks

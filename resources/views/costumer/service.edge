@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <title>Servicio - Buzca</title>
+</head>
+<body>
+    <div>
+        <div style="padding: 20px;">
+            <a href="/main" style="color:#23d160;"><i class="fas fa-long-arrow-alt-left"></i></a>            
+        </div>
+        <div class="box">
+            <form action="" id="app">
+                <div class="box">
+                    <h1 class="title">{{ partner.skill }}</h1>
+                    <span><b>{{ partner.name }} {{ partner.lastname }}</b></span><br>
+                </div>
+                <div class="box">
+                    <div class="control">
+                        <center>
+                            <label class="radio">
+                                <input type="radio" value="1" v-model="calification">
+                                1
+                            </label>
+                            <label class="radio">
+                                <input type="radio" value="2" v-model="calification">
+                                2
+                            </label>
+                            <label class="radio">
+                                <input type="radio" value="3" v-model="calification">
+                                3
+                            </label>
+                            <label class="radio">
+                                <input type="radio" value="4" v-model="calification">
+                                4
+                            </label>
+                            <label class="radio">
+                                <input type="radio" value="5" v-model="calification">
+                                5
+                            </label>
+                        </center>
+                        <center>
+                            <input type="button" class="button is-warning" value="Valorar" @click="valorate">
+                        </center>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+     <!-- development version, includes helpful console warnings -->
+     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+     <script>
+        var app = new Vue({
+            el: '#app',
+            delimiters: ['{(', ')}'],
+            data: {
+                calification: null,
+                usernamePartner: "{{ partner.username }}"
+            },
+            methods: {
+                valorate: function() {
+                    if(this.calification == null) return
+                    
+                    let self = this
+                    axios.post('/service/setValoration', {
+                        calification: this.calification,
+                        usernamePartner: this.usernamePartner
+                    }).then( result => {
+                        console.log(result);
+                        alert('Has valorado con ' + self.calification + ' estrellas' )
+                    }).catch( error => {
+                        console.log('sad');
+                        console.log(error);
+                    })
+                }
+            }
+        });
+     </script>
+</body>
+</html>
