@@ -57,7 +57,7 @@ class SignupController {
                 lastname: lastname,
                 email: email,
                 dist: dist,
-                type: 'user'
+                type: 'customer'
             })
             if(res.error) return response.send('Hubo un error')
             let username = res.data.username

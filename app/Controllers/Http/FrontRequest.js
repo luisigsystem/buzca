@@ -23,11 +23,9 @@ class FrontRequest {
         return new Promise((resolve, reject) => {
             return webhooks.filterServices(request.body.latitude, request.body.longitude, request.body.skill)
                 .then(result => {
-                    console.log(':v')
                     resolve(result)
                 })
                 .catch(error => {
-                    console.log(':"v')
                     reject(error)  
                 })
         })
