@@ -36,6 +36,8 @@ Route.get('/profile/:email', 'customer/MainController.loadProfile')
 Route.get('/messages', 'customer/MainController.loadMessages')
 Route.get('/historial', 'customer/MainController.loadHistorial')
 
+Route.post('/filter/services', 'FrontRequest.filterServices')
+
     /** Partner */
 Route.get('/partner/profile/:email', 'partner/MainController.loadProfile')
 

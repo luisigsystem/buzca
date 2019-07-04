@@ -53,21 +53,25 @@
         </div>
         <div id="services">
             <div class="box">
-                <div class="box"><span>Gasfitero</span></div>
-                <div class="box"><span>Carpintero</span></div>
-                <div class="box"><span>Limpieza</span></div>
-                <div class="box"><span>Técnico</span></div>
-                <div class="box"><span>Electricista</span></div>
+                <div class="box" @click="filterServices('Gasfitero')"><span>Gasfitero</span></div>
+                <div class="box" @click="filterServices('Educación')"><span>Educación</span></div>
+                <div class="box" @click="filterServices('Carpintero')"><span>Carpintero</span></div>
+                <div class="box" @click="filterServices('Limpieza')"><span>Limpieza</span></div>
+                <div class="box" @click="filterServices('Electricista')"><span>Electricista</span></div>
             </div>
         </div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
    crossorigin=""></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
+        var latitude = 0;
+        var longitude = 0;
+
         var appMap = new Vue({
             el: '#app',
             delimiters: ['{(', ')}'],
@@ -80,24 +84,33 @@
             methods: {
                 map: function() {
                     locate(this)
+                },
+                getServices: function(service) {
+                    alert(service)
                 }
             }
         })
-
-
+        
         function locate(vue) {
-            if(navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    vue.position = [position.coords.latitude, position.coords.longitude]
-                    drawMap(position.coords.latitude, position.coords.longitude)
-                })
-            }else {
-                console.log('La geolocolazacion no es soportada')
+            try {
+                if(navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        latitude = position.coords.latitude;
+                        longitude = position.coords.longitude;
+                        vue.position = [position.coords.latitude, position.coords.longitude]
+                        drawMap(position.coords.latitude, position.coords.longitude)
+                    })
+                }else {
+                    console.log('La geolocolazacion no es soportada')
+                    const map = L.map('mapid').setView([-12.092233, -77.033312], 15);                
+                }                
+            } catch (error) {
+                const map = L.map('mapid').setView([-12.092233, -77.033312], 15);                
             }
         }     
         function drawMap(latitude, longitude) {
             const coordinates = [latitude, longitude]
-            const map = L.map('mapid').setView(coordinates, 17);
+            const map = L.map('mapid').setView(coordinates, 16);
 
             /** More tiles: https://wiki.openstreetmap.org/wiki/Tiles , es necfesario quitarlñe los simblos de $ al pegar la url*/
             const tileURL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -125,6 +138,31 @@
             else if(popup.style.display == 'block')
                 popup.style.display = 'none'
         }
+
+
+        var services = new Vue({
+            el: '#services',
+            delimiters: ['{(', ')}'],
+            data: {
+                sevices: {}
+            },
+            methods: {
+                filterServices: function(service) {
+                    alert(latitude+' '+longitude+' '+service)
+                    axios.post('/filter/services', {
+                        latitude: latitude, 
+                        longitude: longitude, 
+                        skill: service
+                    }).then(result => {
+                        console.log(':)');
+                        console.log(result);
+                    }).catch(error => {
+                        console.log(':c');
+                        console.log(error);
+                    });
+                }
+            }
+        })
     </script>
 </body>
 </html>
