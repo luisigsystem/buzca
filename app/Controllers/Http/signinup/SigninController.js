@@ -3,7 +3,7 @@
 const Database = use('Database')
 
 class SigninController {
-    async loginPartner({request, response, auth}) {
+    async loginPartner({request, response, auth, view}) {
         try {
             const  { email, password } = request.all()
             
@@ -22,7 +22,7 @@ class SigninController {
         }
     }
 
-    async loginCustomer({request, response, auth}) {
+    async loginCustomer({request, response, auth, view}) {
         try {
             const  { email, password } = request.all()
             
