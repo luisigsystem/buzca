@@ -46,7 +46,20 @@
                         <a href="/partner/earnings" class="option"><div class="option">Mis Ganacias</div></a>
                         <a href="/logout" class="option is-danger is-outlined" style="color:#d42c2c;"><div class="option">Cerrar sesion</div></a>
                     </div>
-                </form>            
+                </form>   
+                <div>
+                    <div class="box" v-for="pend in pending" style="background:rgb(31, 40, 43);color:#fff;">
+                        <div>
+                            <p>{( pend[0].customer )}</p>
+                            <p>Por {( pend[0].time.$numberInt )} horas</p>
+                            <p>S/.{( pend[0].total.$numberInt )}</p>
+                        </div>
+                        <div>
+                            <input type="button" class="button is-info" value="Aceptar">
+                            <input type="button" class="button is-danger" value="Rechazar">
+                        </div>
+                    </div>
+                </div>         
             </div>    
         </div>
         <div>
@@ -127,15 +140,33 @@
             else if(popup.style.display == 'block')
                 popup.style.display = 'none'
         }
-        getPendingCustomers()
-        function getPendingCustomers() {
-            axios.post('/partner/service/pendingCustomer')
-            .then(result => {
-                console.log(result);
-            }).catch(error => {
-                console.log(error);
-            });
-        }
+
+        
+        var nav = new Vue({
+            el: '#nav',
+            delimiters: ['{(', ')}'],
+            data: {
+                pending: {}
+            },
+            created: function() {
+                this.pendingCustomers()
+            },
+            methods: {
+                pendingCustomers: function() {
+                    let self = this
+                    axios.post('/partner/service/pendingCustomer')
+                    .then(result => {
+                        console.log(':)');
+                        console.log(result);
+                        self.pending = result.data.pendingServices
+
+
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                },
+            }
+        });
     </script>
 </body>
 </html>
