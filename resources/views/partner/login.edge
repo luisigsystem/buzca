@@ -15,9 +15,11 @@
                 <h1>Login Partner</h1>
                 <input class="input" type="email" name="email" placeholder="Email" />
                 <input class="input" type="password" name="password" placeholder="Contraseña" />
+                @if( msg ) 
+                <p style="text-align:center;color:#c12828;" >{{ msg }}</p>
+                @endif
                 <a class="button is-info is-inverted" href="/partner/signup">¿No tienes cuenta?</a>
-                <span>{{ msg }}</span>
-                <input class="box button is-link" type="submit" value="Ingresar" />
+                <input class="box button is-link" style="width:100%;" type="submit" value="Ingresar" />
                 <a class="box button is-link is-inverted" href="/">Volver</a>
             </form>
         </div>

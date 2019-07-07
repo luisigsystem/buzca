@@ -25,9 +25,11 @@
                         <option value="Surco">Surco</option>
                     </select>
                     <input class="input" type="password" placeholder="Contraseña" name="password" required="required" />
+                    @if( msg ) 
+                    <p style="text-align:center;color:#c12828;" >{{ msg }}</p>
+                    @endif
                     <a class="button is-success is-inverted" href="/login">¿Ya tienes una cuenta?</a>
-                    <span>{{ msg }}</span>
-                    <input class="box button is-success" type="submit" value="Registrarse"
+                    <input class="box button is-success" style="width:100%;" type="submit" value="Registrarse"
                 /><a class="box button is-success is-inverted" href="/">Volver</a>
             </form>
         </div>

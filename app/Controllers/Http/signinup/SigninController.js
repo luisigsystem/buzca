@@ -29,7 +29,7 @@ class SigninController {
             let user = await Database.select('email').from('users').where('email', email).where('type', "customer").first()
             console.log({user: user})
             if(!user){
-                return view.render('/login', {msg: "Usuario no existe"})
+                return view.render('/costumer/login', {msg: "Usuario no existe"})
             }	
 
             await auth.attempt(email, password)

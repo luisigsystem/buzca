@@ -15,8 +15,11 @@
                 <h1>Inicia Sesión</h1>
                 <input class="input" type="email" placeholder="Email" name="email" />
                 <input class="input" type="password" placeholder="Contraseña" name="password" />
+                @if( msg ) 
+                <p style="text-align:center;color:#c12828;" >{{ msg }}</p>
+                @endif
                 <a class="button is-success is-inverted" href="/signup">¿No tienes cuenta?</a>
-                <input class="box button is-success" type="submit" value="Ingresar" />
+                <input class="box button is-success" type="submit" style="width:100%;" value="Ingresar" />
                 <a class="box button is-success is-inverted" href="/">Volver</a>
             </form>
         </div>
